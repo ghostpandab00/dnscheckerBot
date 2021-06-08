@@ -11,10 +11,10 @@ PORT = int(os.environ.get('PORT', 9999))
 
 def start(update, context):
     username = update.message.from_user
-    update.message.reply_text('Hey! {} Thank you for choosing me!\n\n\n $whoami: DNS RECORDS BOT \n\n $purpose: To fetch the DNS records of domain\n\n Use /help to see the input syntax'.format(username['username']))
+    update.message.reply_text('Hey! {} Thank you for choosing me!\n\n $whoami: DNS RECORDS BOT \n\n $purpose: To fetch the DNS records of domain\n\n Check /help to see more info and input syntax'.format(username['username']))
 
 def help(update, context):
-    update.message.reply_text('Send the domain name.\n Eg: example.com')
+    update.message.reply_text("To check a domain's record send the domain name followed by the record type. \n\n Example: example.com A \n\n Only the below record types are supported \n\n A, AAAA, CNAME MX, NS, SOA, TXT")
 
 def recordcheck(update, context):
     userinput = str(update.message.text)
@@ -30,10 +30,10 @@ def main():
 
     dp.add_handler(MessageHandler(Filters.text, recordcheck))
 
-    updater.start_webhook(listen="127.0.0.1",
+    updater.start_webhook(listen="0.0.0.0",
                         port=int(PORT),
                         url_path=TOKEN,
-                        webhook_url='https://46124f86548d.ngrok.io/' + TOKEN)
+                        webhook_url='https://dnscheckerbot.herokuapp.com/' + TOKEN)
 
     updater.idle()
 
